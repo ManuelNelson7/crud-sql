@@ -1,0 +1,33 @@
+@import "../../index.scss";
+
+#empleados {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+
+    .frst-btn {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    Table {
+        margin-top: 1em;
+        .name {
+            font-weight: 600;
+        }
+
+        .wage {
+            color: $hoverdarkgreen;
+        }
+    }
+
+    Button {
+        padding: 4px 10px;
+    }
+
+    .add_employee {
+        font-weight: 600;
+    }
+
+}

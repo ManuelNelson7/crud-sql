@@ -1,0 +1,100 @@
+$headerblack: rgb(41, 43, 52);
+$lightblue: rgb(27, 166, 247);
+$darkblue: rgb(27, 99, 255);
+$darkpurple: rgb(88, 27, 255);;
+$hoverdarkblue: rgb(23, 74, 182);
+$hoverdarkpurple: rgb(103, 23, 182);
+$darkgreen: rgb(4, 186, 146);
+$hoverdarkgreen: rgb(0, 145, 113);
+$gray: rgb(82, 82, 82);
+$gray-form: rgb(243, 243, 246);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.btn {
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.213);
+}
+
+.btn.btn-primary {
+    background-color: $darkblue;
+    border-color: $darkblue;
+    border: none;
+
+    &:hover {
+        background-color: $hoverdarkblue;
+    }
+}
+
+.btn.btn-secondary {
+    background-color: $darkgreen;
+    border-color: $darkgreen;
+
+    &:hover {
+        background-color: $hoverdarkgreen;
+    }
+}
+
+.btn.btn-purple {
+    background-color: $darkpurple;
+    border-color: $darkpurple;
+    color: #fff;
+
+    &:hover {
+        background-color: $hoverdarkpurple;
+    }
+}
+
+.btn.btn-outline-primary {
+    border-color: $darkblue;
+    color: $darkblue;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $darkblue !important;
+    }
+}
+
+.btn.btn-outline-secondary {
+    border: solid 2px $darkgreen;
+    color: #fff;
+    font-weight: 600;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $darkgreen !important;
+        color: #fff;
+    }
+}
+
+input.form-control,
+textarea.form-control {
+
+    border-radius: 8px;
+    margin-bottom: 1em;
+    padding-left: 1em;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+
+    &:focus {
+    box-shadow: none;
+    }
+}
+
+.container-90 {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding-top: 2em;
+}
+
+Table {
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.213);
+}

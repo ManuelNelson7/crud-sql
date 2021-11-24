@@ -1,0 +1,18 @@
+@import "../../../index.scss";
+
+.login-em {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: auto;
+    height: 100vh!important;
+
+    .sign-in-form {
+        
+    }
+
+    .login__right {
+        
+        background-size: cover;
+
+    }
+}
