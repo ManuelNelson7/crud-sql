@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Form, Button, Spinner } from "react-bootstrap"
 import { Link } from 'react-router-dom'
 
-import './loginEmpleado.scss'
 import '../../../components/Login/FormLogin/FormEmpleado.scss'
 
 const LoginEmpleado = (props) => {

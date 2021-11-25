@@ -7,15 +7,15 @@ import {
 } from "react-router-dom";
 import Empleados from './pages/Empleados/empleados';
 import Login from './pages/Login/login';
-import LoginEmpleado from './pages/Login/LoginEmpleado/loginEmpleado';
+import LoginEmpleado from './components/Login/FormLogin/loginEmpleado';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path='/' exact element={<Login />} />
-        <Route path='/login-empleado' element={<LoginEmpleado />}  />
-        <Route path='/empleados' element={<Empleados />}  />
+        <Route path='/login-empleado' element={<LoginEmpleado />} />
+        <Route path='/empleados' element={<Empleados />} />
       </Routes>
     </Router>
   )

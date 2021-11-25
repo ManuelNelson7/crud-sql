@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Axios } from 'axios';
 
 const FormEmployees = () => {
@@ -18,7 +18,7 @@ const FormEmployees = () => {
     const closeForm = () => {
         setForm(false);
     }
-    
+
     const addEmployee = () => {
         Axios.post("http://localhost:3001/create", {
             name: name,
@@ -51,7 +51,7 @@ const FormEmployees = () => {
             }
         );
     };
-    
+
 
     const deleteEmployee = (id) => {
         Axios.delete(`http://localhost:3001/delete/${id}`).then((response) => {

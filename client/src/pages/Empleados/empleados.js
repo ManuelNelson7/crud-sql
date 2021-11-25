@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Axios from 'axios';
 import axios from 'axios';
 import FormEmployees from '../../components/Forms/FormEmployees';
+import BasicModal from '../../components/modal/BasicModal'
 import Table from 'react-bootstrap/Table';
 import './empleados.scss';
 import { Form, Button, Spinner } from "react-bootstrap";
@@ -9,21 +10,23 @@ import Layout from '../../components/Layout/Layout';
 
 function Empleados() {
 
+    const [showModal, setShowModal] = useState(false);
+    const [contentModal, setContentModal] = useState(null);
+
+
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
     const [country, setCountry] = useState('');
     const [position, setPosition] = useState('');
     const [wage, setWage] = useState(0);
-
-    const [form, setForm] = useState(false);
-
     const [newWage, setNewWage] = useState(0);
 
     const [employeeList, setEmployeeList] = useState([]);
 
-    const closeForm = () => {
-        setForm(false);
-    }
+    const openModal = content => {
+        setShowModal(true);
+        setContentModal(content);
+    };
 
     const addEmployee = () => {
         Axios.post("http://localhost:3001/create", {
@@ -36,6 +39,27 @@ function Empleados() {
             console.log("success")
         })
     }
+
+    const updateEmployeeWage = (id) => {
+        Axios.put("http://localhost:3001/update", { wage: newWage, id: id }).then(
+            (response) => {
+                setEmployeeList(
+                    employeeList.map((index) => {
+                        return valor.id === id
+                            ? {
+                                id: valor.id,
+                                name: valor.name,
+                                country: valor.country,
+                                age: valor.age,
+                                position: valor.position,
+                                wage: newWage,
+                            }
+                            : valor;
+                    })
+                );
+            }
+        );
+    };
 
     const fetchEmployee = async () => {
         try {
@@ -53,31 +77,12 @@ function Empleados() {
         )
     }
 
-    const updateEmployeeWage = (id) => {
-        Axios.put("http://localhost:3001/update", { wage: newWage, id: id }).then(
-            (response) => {
-                setEmployeeList(
-                    employeeList.map((val) => {
-                        return val.id === id
-                            ? {
-                                id: val.id,
-                                name: val.name,
-                                country: val.country,
-                                age: val.age,
-                                position: val.position,
-                                wage: newWage,
-                            }
-                            : val;
-                    })
-                );
-            }
-        );
-    };
+
 
     const deleteEmployee = (id) => {
         Axios.delete(`http://localhost:3001/delete/${id}`).then((response) => {
-            setEmployeeList(employeeList.filter((val) => {
-                return val.id !== id
+            setEmployeeList(employeeList.filter((valoror) => {
+                return valoror.id !== id
             }))
         })
     }
@@ -109,20 +114,38 @@ function Empleados() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {employeeList.map((val, key) => (
-                                        <tr key={val.id}>
+                                    {employeeList.map((valor, key) => (
+                                        <tr key={valor.id}>
                                             <td>
-                                                <span className='name'>{val.name}</span>
+                                                <span className='name'>{valor.name}</span>
                                             </td>
                                             <td>
-                                                <span>{val.position}</span>
+                                                <span>{valor.position}</span>
                                             </td>
-                                            <td><span className="wage">{`$${val.wage}`}</span></td>
+                                            <td><span className="wage">{`$${valor.wage}`}</span></td>
                                             <td>
-                                                <span>{`${val.age} años`}</span>
+                                                <span>{`${valor.age} años`}</span>
                                             </td>
                                             <td>
-                                                <Button variant="primary">Editar</Button>
+                                                <Button onClick={() => openModal(
+                                                    <div className="editar-empleado">
+                                                        <h2>Editar Sueldo</h2>
+                                                        <Form>
+                                                            <Form.Group>
+                                                                <Form.Label>Nuevo sueldo</Form.Label>
+                                                                <Form.Control type="number" placeholder="$" name="wage" onChange={(event) => {
+                                                                    setNewWage(event.target.valorue)
+                                                                }} />
+
+                                                                <Button variant="primary" type="submit" onClick={() => { updateEmployeeWage(valor.id) }}>
+                                                                    Actualizar
+                                                                </Button>
+
+                                                            </Form.Group>
+                                                        </Form>
+                                                    </div>
+                                                )} variant="primary">Editar</Button>
+                                                <Button variant="danger">Eliminar</Button>
                                             </td>
                                         </tr>
                                     ))}
@@ -132,6 +155,9 @@ function Empleados() {
                     </div>
                 </section>
             </Layout>
+            <BasicModal show={showModal} setShow={setShowModal} >
+                {contentModal}
+            </BasicModal>
 
         </>
 
@@ -139,3 +165,55 @@ function Empleados() {
 }
 
 export default Empleados;
+
+
+const EditarEmpleado = (props) => {
+
+    const [newWage, setNewWage] = useState(0);
+    const [employeeList, setEmployeeList] = useState([]);
+
+    const onSubmit = e => {
+        e.preventDefault();
+    }
+
+    const updateEmployeeWage = (id) => {
+        Axios.put("http://localhost:3001/update", { wage: newWage, id: id }).then(
+            (response) => {
+                setEmployeeList(
+                    employeeList.map((valor) => {
+                        return valor.id === id
+                            ? {
+                                id: valor.id,
+                                name: valor.name,
+                                country: valor.country,
+                                age: valor.age,
+                                position: valor.position,
+                                wage: newWage,
+                            }
+                            : valor;
+                    })
+                );
+            }
+        );
+    };
+
+    return (
+        <div className="editar-empleado">
+            <h2>Editar Sueldo</h2>
+            <Form onSubmit={onSubmit}>
+                <Form.Group>
+                    <Form.Label>Nuevo sueldo</Form.Label>
+                    <Form.Control type="number" placeholder="$" name="wage" onChange={(event) => {
+                        setNewWage(event.target.valorue)
+                    }} />
+
+                    <Button variant="primary" type="submit" onClick={() => { updateEmployeeWage() }}>
+                        Actualizar
+                    </Button>
+
+                </Form.Group>
+            </Form>
+        </div>
+    )
+}
+

@@ -41,16 +41,20 @@
         }
     }
 
-    Button {
-        justify-content: center;
+    a {
         width: 100%;
-        border-radius: 4px;
-        padding: 9px;
-        font-weight: 600;
 
-        a {
-            color: #fff;
-            text-decoration: none;
+        Button {
+            justify-content: center;
+            width: 100%;
+            border-radius: 4px;
+            padding: 9px;
+            font-weight: 600;
+
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
         }
     }
 }
