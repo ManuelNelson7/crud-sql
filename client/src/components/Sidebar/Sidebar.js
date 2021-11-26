@@ -14,7 +14,7 @@ const Sidebar = () => {
                 <Link to="/fassad"><FaHome size="1.1em" />Inicio</Link>
                 <Link to="/products"><AiFillMedicineBox size="1.2em" />Productos</Link>
                 <Link to="/fassad"><FaUser size='1.1em' />Perfil</Link>
-                <Link to="/logout"><FaPowerOff size="1.1em" />Cerrar Sesión</Link>
+                <Link to="/"><FaPowerOff size="1.1em" />Cerrar Sesión</Link>
             </div>
 
             <a href="https://bioprotece.com#contacto" target="_blank">

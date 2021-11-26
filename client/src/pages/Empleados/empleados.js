@@ -127,24 +127,7 @@ function Empleados() {
                                                 <span>{`${valor.age} años`}</span>
                                             </td>
                                             <td>
-                                                <Button onClick={() => openModal(
-                                                    <div className="editar-empleado">
-                                                        <h2>Editar Sueldo</h2>
-                                                        <Form>
-                                                            <Form.Group>
-                                                                <Form.Label>Nuevo sueldo</Form.Label>
-                                                                <Form.Control type="number" placeholder="$" name="wage" onChange={(event) => {
-                                                                    setNewWage(event.target.valorue)
-                                                                }} />
-
-                                                                <Button variant="primary" type="submit" onClick={() => { updateEmployeeWage(valor.id) }}>
-                                                                    Actualizar
-                                                                </Button>
-
-                                                            </Form.Group>
-                                                        </Form>
-                                                    </div>
-                                                )} variant="primary">Editar</Button>
+                                                <Button onClick={() => openModal()} variant="primary">Editar</Button>
                                                 <Button variant="danger">Eliminar</Button>
                                             </td>
                                         </tr>
@@ -180,17 +163,17 @@ const EditarEmpleado = (props) => {
         Axios.put("http://localhost:3001/update", { wage: newWage, id: id }).then(
             (response) => {
                 setEmployeeList(
-                    employeeList.map((valor) => {
-                        return valor.id === id
+                    employeeList.map((val) => {
+                        return val.id === id
                             ? {
-                                id: valor.id,
-                                name: valor.name,
-                                country: valor.country,
-                                age: valor.age,
-                                position: valor.position,
+                                id: val.id,
+                                name: val.name,
+                                country: val.country,
+                                age: val.age,
+                                position: val.position,
                                 wage: newWage,
                             }
-                            : valor;
+                            : val;
                     })
                 );
             }
@@ -204,7 +187,7 @@ const EditarEmpleado = (props) => {
                 <Form.Group>
                     <Form.Label>Nuevo sueldo</Form.Label>
                     <Form.Control type="number" placeholder="$" name="wage" onChange={(event) => {
-                        setNewWage(event.target.valorue)
+                        setNewWage(event.target.value)
                     }} />
 
                     <Button variant="primary" type="submit" onClick={() => { updateEmployeeWage() }}>

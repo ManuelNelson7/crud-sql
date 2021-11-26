@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Button } from "react-bootstrap"
+import { Form, Button } from "react-bootstrap";
 import Axios from 'axios';
+import "../../components/Forms/EditarEmpleado.scss";
 
 const EditarEmpleado = (props) => {
 
@@ -9,27 +10,6 @@ const EditarEmpleado = (props) => {
 
     const onSubmit = e => {
         e.preventDefault();
-    }
-
-    const updateEmployeeWage = (id) => {
-        Axios.put("http://localhost:3001/update", { wage: newWage, id: id }).then(
-            (response) => {
-                setEmployeeList(
-                    employeeList.map((valor) => {
-                        return valor.id === id
-                            ? {
-                                id: valor.id,
-                                name: valor.name,
-                                country: valor.country,
-                                age: valor.age,
-                                position: valor.position,
-                                wage: newWage,
-                            }
-                            : valor;
-                    })
-                );
-            }
-        );
     };
 
     return (
@@ -39,10 +19,10 @@ const EditarEmpleado = (props) => {
                 <Form.Group>
                     <Form.Label>Nuevo sueldo</Form.Label>
                     <Form.Control type="number" placeholder="$" name="wage" onChange={(event) => {
-                        setNewWage(event.target.valor)
+                        setNewWage(event.targetF.val)
                     }} />
 
-                    <Button variant="primary" type="submit" onClick={() => { updateEmployeeWage(valor.id) }}>
+                    <Button variant="primary" type="submit">
                         Actualizar
                     </Button>
 

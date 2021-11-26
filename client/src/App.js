@@ -5,7 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Empleados from './pages/Empleados/empleados';
+import Sample from './pages/Empleados/Sample';
 import Login from './pages/Login/login';
 import LoginEmpleado from './components/Login/FormLogin/loginEmpleado';
 
@@ -15,7 +15,7 @@ const App = () => {
       <Routes>
         <Route path='/' exact element={<Login />} />
         <Route path='/login-empleado' element={<LoginEmpleado />} />
-        <Route path='/empleados' element={<Empleados />} />
+        <Route path='/empleados' element={<Sample />} />
       </Routes>
     </Router>
   )
