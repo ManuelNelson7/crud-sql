@@ -1,73 +1,48 @@
 const express = require("express");
-const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
 
-app.use(cors());
+const app = express();
+
 app.use(express.json());
+app.use(cors());
 
 const db = mysql.createConnection({
-    user: "root",
-    host: "127.0.0.1",
-    password: "Bioprotece2021",
-    database: "employeeSystem",
-    port: "3306",
-
+    user: "Bioprotece",
+    host: "localhost",
+    password: "bioprotece2021",
+    database: "Bioprotece"
 });
 
-app.post("/create", (req, res) => {
-    const name = req.body.name;
-    const age = req.body.age;
-    const country = req.body.country;
-    const position = req.body.position;
-    const wage = req.body.wage;
+app.post('/register', (req, res) => {
+    db.query("INSERT INTO clientes (nombre, apellido, empresa, email, password) VALUES (?,?,?,?,?))",
+        [nombre, apellido, empresa, email, password],
+        (err, result) => {
+            console.log(err);
+        }
+    )
+});
 
-    db.query(
-        "INSERT INTO employees (name, age, country, position, wage) VALUES (?,?,?,?,?)",
-        [name, age, country, position, wage],
+app.post('/login'), (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    db.query("SELECT * FROM clientes WHERE email = ? AND password = ?",
+        [email, password],
         (err, result) => {
             if (err) {
-                console.log(err);
+                res.send({ err: err });
+            }
+            if (result) {
+                res.send(result);
             } else {
-                res.send("Values Inserted");
+                res.send({ message: "Wrong email/password" });
+                res.send({ message: "Wrong sentence" })
             }
         }
-    );
-});
-
-app.get('/employees', (req, res) => {
-    db.query("SELECT * FROM employees", (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.send(result)
-        }
-    })
-})
-
-app.put('/update', (req, res) => {
-    const id = req.body.id
-    const wage = req.body.wage;
-    db.query("UPDATE employees SET wage = ? WHERE id = ?", [wage, id], (err, result) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.send(result);
-        }
-    })
-});
-
-app.delete('/delete/:id', (req, res) => {
-    const id = req.params.id;
-    db.query("DELETE FROM employees WHERE id = ?", id, (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.send(result)
-        }
-    })
-});
+    )
+}
 
 app.listen(3001, () => {
-    console.log("Yey, your server is running on port 3001");
+    console.log("running server");
 });

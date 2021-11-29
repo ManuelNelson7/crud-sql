@@ -4,9 +4,21 @@ import { Link } from 'react-router-dom'
 import './FormLogin.scss'
 
 const FormLogin = (props) => {
-    const { setRefreshCheckLogin } = props;
-    const [formData, setFormData] = useState(initialFormValue())
+
+    const [form, setForm] = useState({
+        email: '',
+        password: ''
+    })
     const [signInLoading, setSignInLoading] = useState(false)
+
+    const handleChange = e => {
+        const {name, value} = e.target;
+        setForm({
+            ...form,
+            [name]: value
+        });
+        console.log(form);
+    }
 
     const onSubmit = e => {
         e.preventDefault();
@@ -22,9 +34,9 @@ const FormLogin = (props) => {
                     <Form onSubmit={onSubmit}>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Tu email" defaultValue={formData.email} name="email" />
+                            <Form.Control type="email" placeholder="Tu email" name="email" />
                             <Form.Label>Contraseña</Form.Label>
-                            <Form.Control id="last" type="password" placeholder="Tu contraseña" defaultValue={formData.password} name="password" />
+                            <Form.Control id="last" type="password" placeholder="Tu contraseña" name="password" />
                             <Link className="forget" to="/recuperar-password"><span>Olvidé mi contraseña</span></Link>
                             <Link to="/empleados">
                                 <Button variant="primary" type="submit">
@@ -46,10 +58,3 @@ const FormLogin = (props) => {
 }
 
 export default FormLogin
-
-function initialFormValue() {
-    return {
-        email: "",
-        password: ""
-    };
-}

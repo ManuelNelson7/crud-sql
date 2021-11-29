@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import md5 from 'md5'
 import BasicModal from '../../components/modal/BasicModal'
 import { Form, Button, Spinner } from "react-bootstrap"
 import { Link } from 'react-router-dom'
+import Cookies from 'universal-cookie';
 import FormRegister from '../../components/Login/FormRegister/FormRegister'
+import axios from 'axios'
 
 import './login.scss'
 import '../../components/Login/FormLogin/FormLogin.scss'
@@ -43,13 +46,25 @@ const RightComponent = () => {
 }
 
 const FormLogin2 = (props) => {
+
     const { openModal, setShowModal, setRefreshCheckLogin } = props;
-    const [formData, setFormData] = useState(initialFormValue());
-    const [signInLoading, setSignInLoading] = useState(false);
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const onSubmit = e => {
         e.preventDefault();
     }
+
+    const login = () => {
+        axios.post("http://localhost:3001/login", {
+            email: email,
+            password: password,
+        }).then((response) => {
+            console.log(response);
+        });
+    }
+
 
     return (
         <div className="sign-in-form">
@@ -61,19 +76,23 @@ const FormLogin2 = (props) => {
                     <Form onSubmit={onSubmit}>
                         <Form.Group>
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Tu email" defaultValue={formData.email} name="email" />
+                            <Form.Control type="email" placeholder="Tu email" name="email" onchange={(e) => {
+                                setEmail(e.target.value);
+                            }} />
                             <Form.Label>Contraseña</Form.Label>
-                            <Form.Control id="last" type="password" placeholder="Tu contraseña" defaultValue={formData.password} name="password" />
+                            <Form.Control id="last" type="password" placeholder="Tu contraseña" name="password" onchange={(e) => {
+                                setPassword(e.target.value);
+                            }} />
                             <Link className="forget" to="/recuperar-password"><span>Olvidé mi contraseña</span></Link>
-                            <Link to="/empleados">
-                                <Button variant="primary" type="submit">
-                                    {!signInLoading ? "Iniciar sesión" : <Spinner animation="border" />}
-                                </Button>
-                            </Link>
+
+                            <Button variant="primary" type="submit" onClick={login} >
+                                Iniciar Sesión
+                            </Button>
+
                             <hr />
 
-                            <Button class="register" variant="secondary" type="submit" onClick={() => openModal(<FormRegister/>)}>
-                                {!signInLoading ? "Registrarse" : <Spinner animation="border" />}
+                            <Button className="register" variant="secondary" type="submit" onClick={() => openModal(<FormRegister />)}>
+                                Registrarse
                             </Button>
                             <Link className="soy-empleado" to="/login-empleado"><span>Soy empleado</span></Link>
 
@@ -93,4 +112,3 @@ function initialFormValue() {
         password: ""
     };
 }
-

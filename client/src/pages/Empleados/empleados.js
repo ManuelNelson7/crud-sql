@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Axios from 'axios';
 import axios from 'axios';
 import FormEmployees from '../../components/Forms/FormEmployees';
-import BasicModal from '../../components/modal/BasicModal'
+import BasicModal from '../../components/modal/BasicModal';
 import Table from 'react-bootstrap/Table';
 import './empleados.scss';
 import { Form, Button, Spinner } from "react-bootstrap";
@@ -29,7 +29,7 @@ function Empleados() {
     };
 
     const addEmployee = () => {
-        Axios.post("http://localhost:3001/create", {
+        Axios.post("http://localhost:3001/crear-cliente", {
             name: name,
             age: age,
             country: country,
@@ -41,7 +41,7 @@ function Empleados() {
     }
 
     const updateEmployeeWage = (id) => {
-        Axios.put("http://localhost:3001/update", { wage: newWage, id: id }).then(
+        Axios.put("http://localhost:3001/clientes", { wage: newWage, id: id }).then(
             (response) => {
                 setEmployeeList(
                     employeeList.map((index) => {
@@ -63,19 +63,19 @@ function Empleados() {
 
     const fetchEmployee = async () => {
         try {
-            const res = await axios.get("http://localhost:3001/employees").then((response) => {
+            const res = await axios.get("http://localhost:3001/update").then((response) => {
                 setEmployeeList(response.data)
             });
         } catch (err) {
             console.error(err)
         }
-    }
+    };
 
     const newEmployee = () => {
         return (
             <FormEmployees />
         )
-    }
+    };
 
 
 
@@ -85,11 +85,11 @@ function Empleados() {
                 return valoror.id !== id
             }))
         })
-    }
+    };
 
     useEffect(() => {
         fetchEmployee();
-    })
+    });
 
     return (
         <>
