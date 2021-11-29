@@ -88,7 +88,6 @@ const FormLogin2 = (props) => {
                             <Button variant="primary" type="submit" onClick={login} >
                                 Iniciar Sesión
                             </Button>
-
                             <hr />
 
                             <Button className="register" variant="secondary" type="submit" onClick={() => openModal(<FormRegister />)}>
